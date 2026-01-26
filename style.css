@@ -24,7 +24,7 @@ body {
   display: flex;
 }
 
-.btn-contato button {
+.btn-contato button, .btn-enviar button {
   padding: 10px 40px;
   font-size: 18px;
   font-weight: 600;
@@ -293,7 +293,7 @@ form .btn-enviar {
 }
 
 form .btn-enviar input {
-  width: 120px;
+  width: auto;
   background-color: #00ff08;
   color: #000;
   font-weight: 700;
