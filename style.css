@@ -24,7 +24,7 @@ body {
   display: flex;
 }
 
-.btn-contato button, .btn-enviar button {
+.btn-contato button,  .btn-enviar button {
   padding: 10px 40px;
   font-size: 18px;
   font-weight: 600;
@@ -102,6 +102,16 @@ section.topo-do-site .flex {
   align-items: center;
   justify-content: center;
   gap: 90px;
+}
+
+.btn-contato {
+  display: flex;
+  gap: 15px;      /* Espaço entre os dois botões */
+  margin-top: 20px;
+}
+
+.btn-contato a{
+  text-decoration: none;
 }
 
 .topo-do-site h1 {
