@@ -9,11 +9,17 @@ import Icon from '@/components/Icon.astro';
   noindex
 >
   <section class="container-site py-20 sm:py-28" aria-labelledby="titulo-pagina">
-    <p class="eyebrow">Erro 404</p>
-    <h1 id="titulo-pagina" class="mt-2 text-4xl font-bold tracking-tight sm:text-5xl">
+    <p class="rotulo">Erro 404</p>
+    <p
+      class="mt-6 font-serif text-[clamp(6rem,3rem+18vw,14rem)] leading-[0.85] tracking-tight text-accent"
+      aria-hidden="true"
+    >
+      404
+    </p>
+    <h1 id="titulo-pagina" class="titulo-secao mt-6">
       Página não encontrada
     </h1>
-    <p class="mt-4 max-w-xl text-lg text-muted">
+    <p class="lead mt-4">
       O endereço pode ter mudado ou foi digitado incorretamente. Use um dos caminhos abaixo para
       continuar navegando.
     </p>
@@ -23,6 +29,7 @@ import Icon from '@/components/Icon.astro';
       </a>
       <a href="/projetos" class="btn btn-secondary">
         Ver projetos
+        <Icon name="seta-direita" size={16} class="icone-seta" />
       </a>
     </div>
   </section>

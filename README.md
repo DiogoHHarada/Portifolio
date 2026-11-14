@@ -2,7 +2,7 @@
 
 Site institucional e portfólio com dois caminhos: **clientes** (serviços → orçamento pelo WhatsApp) e **recrutadores** (projetos → estudos de caso → trajetória e currículo).
 
-- **Stack:** Astro 7 · TypeScript strict · Tailwind CSS 4 · Content Collections (Markdown + Zod) · `astro:assets` · Poppins local (Fontsource) · Vercel
+- **Stack:** Astro 7 · TypeScript strict · Tailwind CSS 4 · Content Collections (Markdown + Zod) · `astro:assets` · fontes locais via Fontsource (Instrument Serif, Geist Sans, JetBrains Mono) · Vercel
 - **Sem backend e sem banco** no MVP. Todas as páginas são HTML estático.
 - Especificações: [`PRD_Harada_DevSystems.md`](PRD_Harada_DevSystems.md), [`PDD_Harada_DevSystems.md`](PDD_Harada_DevSystems.md). Decisões: [`DECISOES.md`](DECISOES.md). Pendências: [`PENDENCIAS.md`](PENDENCIAS.md). Evidências de testes: [`docs/qualidade.md`](docs/qualidade.md).
 

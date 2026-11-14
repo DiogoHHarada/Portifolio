@@ -14,22 +14,24 @@ import { competencias, experiencia, formacao, idiomas } from '@/data/perfil';
   description="Trajetória de Diogo Harada: técnico em Informática pelo CTI-UNESP, estudante de Análise e Desenvolvimento de Sistemas no IFSP Caraguatatuba, competências técnicas e currículo para download."
   type="profile"
 >
-  <section class="container-site pt-10 sm:pt-16" aria-labelledby="titulo-pagina">
-    <div class="grid items-start gap-10 lg:grid-cols-[0.7fr_1.3fr]">
-      <Image
-        src={foto}
-        alt="Diogo Harada ao ar livre, de óculos e camisa polo preta, com os braços cruzados."
-        widths={[300, 600]}
-        sizes="(min-width: 1024px) 300px, 240px"
-        priority
-        class="mx-auto h-auto w-60 rounded-[var(--radius-card)] border border-border lg:w-full lg:max-w-[300px]"
-      />
-      <div>
-        <p class="eyebrow">Sobre</p>
-        <h1 id="titulo-pagina" class="mt-2 text-4xl font-bold tracking-tight sm:text-5xl">
-          Muito prazer, sou {site.pessoa}.
+  <section class="container-site pt-12 sm:pt-20" aria-labelledby="titulo-pagina">
+    <div class="grid items-start gap-12 lg:grid-cols-12 lg:gap-16">
+      <div class="lg:col-span-4">
+        <Image
+          src={foto}
+          alt="Diogo Harada ao ar livre, de óculos e camisa polo preta, com os braços cruzados."
+          widths={[240, 300, 600]}
+          sizes="(min-width: 1024px) 300px, 240px"
+          priority
+          class="mx-auto h-auto w-60 rounded-md border border-border lg:mx-0 lg:w-full lg:max-w-[300px]"
+        />
+      </div>
+      <div class="lg:col-span-8">
+        <p class="rotulo">Sobre</p>
+        <h1 id="titulo-pagina" class="titulo-pagina mt-6">
+          Muito prazer, <em class="destaque-serif">sou {site.pessoa}.</em>
         </h1>
-        <div class="mt-6 max-w-[68ch] space-y-4 text-[1.05rem] text-[#d4d4d4]">
+        <div class="mt-8 max-w-[62ch] space-y-5 text-[1.0625rem] text-text/85">
           <p>
             Sou natural de Bauru/SP e comecei na tecnologia em 2022, no Colégio Técnico Industrial
             (CTI-UNESP), onde me formei técnico em Informática. Lá construí a base em programação
@@ -49,7 +51,7 @@ import { competencias, experiencia, formacao, idiomas } from '@/data/perfil';
             na região.
           </p>
         </div>
-        <div class="mt-8 flex flex-col gap-3 sm:flex-row sm:items-center">
+        <div class="mt-10 flex flex-col gap-4 sm:flex-row sm:items-center">
           <a
             href={site.curriculo.href}
             download={site.curriculo.nomeArquivo}
@@ -66,18 +68,19 @@ import { competencias, experiencia, formacao, idiomas } from '@/data/perfil';
     </div>
   </section>
 
-  <section class="container-site mt-20" aria-labelledby="titulo-formacao">
-    <div class="grid gap-10 lg:grid-cols-2">
+  <section class="container-site mt-28 sm:mt-36" aria-labelledby="titulo-formacao">
+    <div class="grid gap-16 lg:grid-cols-2 lg:gap-20">
       <div>
-        <h2 id="titulo-formacao" class="titulo-secao">
+        <p class="rotulo">Percurso</p>
+        <h2 id="titulo-formacao" class="titulo-secao mt-4">
           Formação
         </h2>
-        <ol class="mt-6 space-y-4">
+        <ol class="linhas mt-8">
           {formacao.map((f) => (
-            <li class="rounded-[var(--radius-card)] border border-border bg-surface p-5">
-              <h3 class="font-semibold">{f.curso}</h3>
+            <li class="py-6">
+              <h3 class="font-medium">{f.curso}</h3>
               <p class="mt-1 text-muted">{f.instituicao}</p>
-              <p class="mt-2 text-sm text-muted">
+              <p class="meta-mono mt-3">
                 {f.periodo} · <span class="text-accent">{f.status}</span>
               </p>
             </li>
@@ -85,15 +88,16 @@ import { competencias, experiencia, formacao, idiomas } from '@/data/perfil';
         </ol>
       </div>
       <div>
-        <h2 class="titulo-secao">Experiência</h2>
-        <ol class="mt-6 space-y-4">
+        <p class="rotulo">Prática</p>
+        <h2 class="titulo-secao mt-4">Experiência</h2>
+        <ol class="linhas mt-8">
           {experiencia.map((e) => (
-            <li class="rounded-[var(--radius-card)] border border-border bg-surface p-5">
-              <h3 class="font-semibold">
+            <li class="py-6">
+              <h3 class="font-medium">
                 {e.cargo} — {e.organizacao}
               </h3>
-              <p class="mt-1 text-sm text-muted">{e.periodo}</p>
-              <ul class="mt-3 list-disc space-y-1 pl-5 text-[0.95rem] text-muted marker:text-accent">
+              <p class="meta-mono mt-2">{e.periodo}</p>
+              <ul class="mt-4 list-[square] space-y-1.5 pl-5 text-[0.95rem] text-muted marker:text-accent">
                 {e.atividades.map((a) => (
                   <li>{a}</li>
                 ))}
@@ -105,25 +109,26 @@ import { competencias, experiencia, formacao, idiomas } from '@/data/perfil';
     </div>
   </section>
 
-  <section class="container-site mt-20" aria-labelledby="titulo-competencias">
-    <h2 id="titulo-competencias" class="titulo-secao">
+  <section class="container-site mt-28 sm:mt-36" aria-labelledby="titulo-competencias">
+    <p class="rotulo">Ferramentas</p>
+    <h2 id="titulo-competencias" class="titulo-secao mt-4">
       Competências
     </h2>
-    <dl class="mt-6 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+    <dl class="linhas mt-8">
       {competencias.map((c) => (
-        <div class="rounded-[var(--radius-card)] border border-border bg-surface p-5">
-          <dt class="font-semibold">{c.grupo}</dt>
-          <dd class="mt-3">
+        <div class="grid gap-3 border-t border-border py-6 last:border-b sm:grid-cols-[13rem_1fr] sm:gap-8">
+          <dt class="meta-mono pt-1 uppercase">{c.grupo}</dt>
+          <dd>
             <ul class="flex flex-wrap gap-2">
               {c.itens.map((item) => (
-                <li class="chip">{item}</li>
+                <li class="chip text-text/90">{item}</li>
               ))}
             </ul>
           </dd>
         </div>
       ))}
     </dl>
-    <p class="mt-6 text-muted">
+    <p class="meta-mono mt-6">
       Idiomas: {idiomas.map((i) => `${i.idioma} — ${i.nivel}`).join(' · ')}
     </p>
   </section>

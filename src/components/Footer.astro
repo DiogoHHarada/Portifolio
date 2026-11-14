@@ -5,28 +5,27 @@ import { contato, navegacao, site, whatsappUrl } from '@/data/site';
 
 const ano = new Date().getFullYear();
 const direitos = `© ${ano} ${site.pessoa} · ${site.marca}`;
+const classeLink =
+  'inline-flex items-center gap-2 py-1.5 text-muted transition-colors hover:text-text';
 ---
 
-<footer class="mt-24 border-t border-border bg-surface">
-  <div class="container-site grid gap-10 py-12 md:grid-cols-[1.4fr_1fr_1fr]">
+<footer class="border-t border-border bg-bg">
+  <div class="container-site grid gap-12 py-16 md:grid-cols-[1.5fr_1fr_1fr]">
     <div>
-      <p class="text-lg font-semibold">{site.marca}</p>
-      <p class="mt-2 max-w-sm text-sm text-muted">
+      <p class="font-serif text-4xl leading-none">{site.marca}</p>
+      <p class="mt-4 max-w-sm text-muted">
         Portfólio e serviços de {site.pessoa}, desenvolvedor web. Sites institucionais, lojas
         virtuais e landing pages.
       </p>
-      <SocialLinks class="mt-5" />
+      <SocialLinks class="mt-6" />
     </div>
 
     <nav id="navegacao-rodape" aria-label="Rodapé" tabindex="-1">
-      <h2 class="text-sm font-semibold tracking-wider text-text uppercase">Navegação</h2>
-      <ul class="mt-4 space-y-1">
+      <h2 class="rotulo">Navegação</h2>
+      <ul class="mt-5 space-y-0.5">
         {navegacao.map((item) => (
           <li>
-            <a
-              href={item.href}
-              class="inline-block py-1.5 text-muted transition-colors hover:text-accent"
-            >
+            <a href={item.href} class={classeLink}>
               {item.rotulo}
             </a>
           </li>
@@ -35,25 +34,25 @@ const direitos = `© ${ano} ${site.pessoa} · ${site.marca}`;
           <a
             href={site.curriculo.href}
             download={site.curriculo.nomeArquivo}
-            class="inline-block py-1.5 text-muted transition-colors hover:text-accent"
+            class={classeLink}
             data-evento="curriculo_download_click"
             data-posicao="rodape"
           >
-            Currículo <span class="text-xs">({site.curriculo.tamanho})</span>
+            Currículo <span class="meta-mono">({site.curriculo.tamanho})</span>
           </a>
         </li>
       </ul>
     </nav>
 
     <div>
-      <h2 class="text-sm font-semibold tracking-wider text-text uppercase">Contato</h2>
-      <ul class="mt-4 space-y-1">
+      <h2 class="rotulo">Contato</h2>
+      <ul class="mt-5 space-y-0.5">
         <li>
           <a
             href={whatsappUrl(contato.mensagemOrcamento)}
             target="_blank"
             rel="noopener noreferrer"
-            class="inline-flex items-center gap-2 py-1.5 text-muted transition-colors hover:text-accent"
+            class={classeLink}
             data-evento="whatsapp_click"
             data-posicao="rodape"
           >
@@ -62,10 +61,7 @@ const direitos = `© ${ano} ${site.pessoa} · ${site.marca}`;
           </a>
         </li>
         <li>
-          <a
-            href={`mailto:${contato.email}`}
-            class="inline-flex items-center gap-2 py-1.5 break-all text-muted transition-colors hover:text-accent"
-          >
+          <a href={`mailto:${contato.email}`} class={`${classeLink} break-all`}>
             <Icon name="email" size={18} />
             {contato.email}
           </a>
@@ -74,6 +70,6 @@ const direitos = `© ${ano} ${site.pessoa} · ${site.marca}`;
     </div>
   </div>
   <div class="border-t border-border">
-    <p class="container-site py-5 text-sm text-muted">{direitos}</p>
+    <p class="container-site meta-mono py-6">{direitos}</p>
   </div>
 </footer>

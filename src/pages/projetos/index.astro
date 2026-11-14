@@ -13,32 +13,28 @@ const opcoes = opcoesDeTecnologia(projetos);
   title="Projetos"
   description="Projetos de Diogo Harada com código-fonte aberto: plataforma de monitoramento meteorológico em Laravel, loja virtual em PHP e PostgreSQL e site para cafeteria. Filtre por tecnologia."
 >
-  <section class="container-site pt-10 sm:pt-16" aria-labelledby="titulo-pagina">
-    <p class="eyebrow">Portfólio</p>
-    <h1 id="titulo-pagina" class="mt-2 text-4xl font-bold tracking-tight sm:text-5xl">
-      Projetos
+  <section class="container-site pt-12 sm:pt-20" aria-labelledby="titulo-pagina">
+    <p class="rotulo">Portfólio</p>
+    <h1 id="titulo-pagina" class="titulo-pagina mt-6">
+      Projetos com <em class="destaque-serif">código aberto</em>
     </h1>
-    <p class="mt-4 max-w-2xl text-lg text-muted">
+    <p class="lead mt-6">
       Trabalhos acadêmicos e de estudo com repositório público. Cada um tem uma página com o
       problema, a solução, minha participação e as tecnologias usadas.
     </p>
 
-    <div class="mt-10">
+    <div class="mt-12">
       <ProjectFilters opcoes={opcoes} total={projetos.length} alvo="lista-projetos" />
     </div>
 
-    <ul id="lista-projetos" class="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+    <ul id="lista-projetos" class="mt-8 border-b border-border">
       {projetos.map((projeto, i) => (
         <li>
-          <ProjectCard projeto={projeto} nivel="h2" lazy={i > 2} />
+          <ProjectCard projeto={projeto} nivel="h2" lazy={i > 1} indice={i + 1} />
         </li>
       ))}
     </ul>
-    <p
-      class="mt-8 rounded-xl border border-border bg-surface p-5 text-muted"
-      data-filtro-vazio
-      hidden
-    >
+    <p class="mt-8 border border-border bg-surface p-5 text-muted" data-filtro-vazio hidden>
       Nenhum projeto encontrado para este filtro. Selecione “Todas” para ver a lista completa.
     </p>
   </section>

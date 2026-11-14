@@ -9,7 +9,7 @@ interface Props {
 const { class: className = '' } = Astro.props;
 ---
 
-<ul class:list={['flex flex-wrap gap-3', className]}>
+<ul class:list={['flex flex-wrap gap-2', className]}>
   {redesVisiveis.map((rede) => (
     <li>
       <a
@@ -17,7 +17,7 @@ const { class: className = '' } = Astro.props;
         target="_blank"
         rel="noopener noreferrer"
         aria-label={`${rede.nome} de ${site.pessoa} (abre em nova aba)`}
-        class="inline-flex h-11 w-11 items-center justify-center rounded-full border-2 border-border text-text transition-colors hover:border-accent hover:text-accent"
+        class="inline-flex h-11 w-11 items-center justify-center rounded-md border border-border-strong text-text transition-colors hover:border-accent hover:text-accent"
       >
         <Icon name={rede.icone} size={20} />
       </a>

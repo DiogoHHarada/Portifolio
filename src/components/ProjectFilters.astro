@@ -13,11 +13,11 @@ interface Props {
 
 const { opcoes, total, alvo } = Astro.props;
 const classeBotao =
-  'inline-flex min-h-11 items-center gap-2 rounded-full border-2 border-border px-4 py-2 text-sm font-medium text-text transition-colors hover:border-accent aria-pressed:border-accent aria-pressed:bg-accent aria-pressed:text-on-accent';
+  'inline-flex min-h-11 items-center gap-2 rounded-md border border-border-strong px-4 py-2 font-mono text-xs font-medium tracking-wide text-text transition-colors hover:border-text aria-pressed:border-accent aria-pressed:bg-accent aria-pressed:text-on-accent';
 ---
 
 <div data-filtro data-alvo={alvo} class="js-only">
-  <h2 id="titulo-filtro" class="text-sm font-semibold tracking-wider text-muted uppercase">
+  <h2 id="titulo-filtro" class="rotulo">
     Filtrar por tecnologia
   </h2>
   <div role="group" aria-labelledby="titulo-filtro" class="mt-3 flex flex-wrap gap-2">

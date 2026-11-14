@@ -16,7 +16,7 @@ interface Props {
 
 const { controla } = Astro.props;
 const classeBase =
-  'lg:hidden inline-flex h-11 min-w-11 items-center justify-center gap-2 rounded-full border-2 border-border px-3 text-sm font-semibold text-text hover:border-accent';
+  'lg:hidden inline-flex h-11 min-w-11 items-center justify-center gap-2 rounded-md border border-border-strong px-3.5 font-mono text-xs font-medium tracking-wider text-text uppercase transition-colors hover:border-text';
 ---
 
 <a href="#navegacao-rodape" class={`${classeBase} no-js-only`} data-menu-fallback>

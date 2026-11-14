@@ -16,27 +16,35 @@ const {
 } = Astro.props;
 ---
 
-<section aria-labelledby={`cta-${posicao}`} class="container-site mt-24">
-  <div class="rounded-[var(--radius-card)] border border-accent/40 bg-surface px-6 py-10 sm:px-10 sm:py-12">
-    <h2 id={`cta-${posicao}`} class="titulo-secao max-w-2xl">
-      {titulo}
-    </h2>
-    <p class="mt-4 max-w-2xl text-muted">{texto}</p>
-    <div class="mt-8 flex flex-col gap-3 sm:flex-row">
-      <a
-        href={whatsappUrl(contato.mensagemOrcamento)}
-        target="_blank"
-        rel="noopener noreferrer"
-        class="btn btn-primary"
-        data-evento="whatsapp_click"
-        data-posicao={posicao}
+<section aria-labelledby={`cta-${posicao}`} class="mt-28 bg-accent text-on-accent sm:mt-36">
+  <div class="container-site grid gap-10 py-16 sm:py-24 lg:grid-cols-[1.4fr_1fr] lg:items-end">
+    <div>
+      <p class="rotulo text-on-accent/70 before:bg-on-accent">Contato</p>
+      <h2
+        id={`cta-${posicao}`}
+        class="titulo-display mt-5 text-[clamp(2.75rem,1.5rem+5.5vw,5.5rem)]"
       >
-        <Icon name="whatsapp" size={20} />
-        Falar no WhatsApp <span class="sr-only">(abre em nova aba)</span>
-      </a>
-      <a href="/contato" class="btn btn-secondary">
-        Outras formas de contato
-      </a>
+        {titulo}
+      </h2>
+    </div>
+    <div>
+      <p class="max-w-md text-lg text-on-accent/80">{texto}</p>
+      <div class="mt-8 flex flex-col gap-3 sm:flex-row">
+        <a
+          href={whatsappUrl(contato.mensagemOrcamento)}
+          target="_blank"
+          rel="noopener noreferrer"
+          class="btn btn-escuro"
+          data-evento="whatsapp_click"
+          data-posicao={posicao}
+        >
+          <Icon name="whatsapp" size={20} />
+          Falar no WhatsApp <span class="sr-only">(abre em nova aba)</span>
+        </a>
+        <a href="/contato" class="btn btn-contorno-escuro">
+          Outras formas de contato
+        </a>
+      </div>
     </div>
   </div>
 </section>

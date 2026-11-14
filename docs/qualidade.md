@@ -1,5 +1,7 @@
 # Evidências de qualidade
 
+> Atualização: após o redesenho visual (docs/design.md), Lighthouse mobile local de `/`, `/projetos`, `/sobre` e `/contato` ficou em 98–100 (Performance) e 100 nas demais categorias, CLS 0. A tabela abaixo é da versão anterior do visual e deve ser remedida.
+
 Medições **locais** no build de produção (`npm run build` + `astro preview`), em 14/11/2026, branch `feat/reestruturacao-astro` (alterações ainda não commitadas). **Produção na Vercel ainda não foi medida** (ver `PENDENCIAS.md`, P-12).
 
 Ambiente: Windows 11, Node.js 24.22.3, Chrome 157, Lighthouse 12.8.2 (configuração padrão **mobile**: emulação Moto G Power, throttling simulado de 4G lento).

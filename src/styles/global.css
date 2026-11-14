@@ -1,48 +1,76 @@
-/* Poppins local (Fontsource), somente subconjunto latino e pesos usados. */
-@import '@fontsource/poppins/latin-400.css';
-@import '@fontsource/poppins/latin-500.css';
-@import '@fontsource/poppins/latin-600.css';
-@import '@fontsource/poppins/latin-700.css';
+/*
+ * Fontes locais (Fontsource), somente subconjunto latino e pesos usados:
+ *   Instrument Serif — títulos (display)
+ *   Geist            — texto e interface
+ *   JetBrains Mono   — rótulos, números e tecnologias
+ */
+@import '@fontsource/instrument-serif/latin-400.css';
+@import '@fontsource/instrument-serif/latin-400-italic.css';
+@import '@fontsource/geist-sans/latin-400.css';
+@import '@fontsource/geist-sans/latin-500.css';
+@import '@fontsource/jetbrains-mono/latin-400.css';
+@import '@fontsource/jetbrains-mono/latin-500.css';
 
 @import 'tailwindcss';
 
 /*
- * Fallback com métricas ajustadas à Poppins (mesmos valores calculados pelo next/font):
- * enquanto a Poppins carrega, o texto ocupa praticamente o mesmo espaço, evitando CLS.
- * Arial/Helvetica/Liberation Sans compartilham as métricas usadas no cálculo.
+ * Fallbacks com métricas ajustadas: enquanto a fonte web carrega, o texto ocupa
+ * praticamente o mesmo espaço, evitando deslocamento de layout (CLS).
  */
 @font-face {
-  font-family: 'Poppins Fallback';
+  font-family: 'Instrument Serif Fallback';
+  src: local('Times New Roman'), local('Liberation Serif'), local('Times');
+  size-adjust: 88%;
+  ascent-override: 112%;
+  descent-override: 35%;
+  line-gap-override: 0%;
+}
+
+@font-face {
+  font-family: 'Geist Fallback';
   src: local('Arial'), local('Helvetica'), local('Liberation Sans');
-  size-adjust: 113.73%;
-  ascent-override: 92.33%;
-  descent-override: 30.78%;
-  line-gap-override: 8.79%;
+  size-adjust: 104%;
+  ascent-override: 88%;
+  descent-override: 21%;
+  line-gap-override: 9%;
+}
+
+@font-face {
+  font-family: 'JetBrains Mono Fallback';
+  src: local('Consolas'), local('Menlo'), local('DejaVu Sans Mono'), local('Courier New');
+  size-adjust: 100%;
+  ascent-override: 102%;
+  descent-override: 30%;
+  line-gap-override: 0%;
 }
 
 /*
- * Tokens de design (identidade atual: fundo preto + acento verde #00ff08).
- * Contrastes calculados (fórmula WCAG 2.x) — todos acima de AA (4.5:1) e AAA (7:1),
- * exceto muted/surface-2 (6.9:1, AA):
- *   text   #f5f5f5 / bg #000      19.26:1
- *   muted  #a3a3a3 / bg #000       8.33:1  (/ surface #121212 7.43:1, / surface-2 6.90:1)
- *   accent #00ff08 / bg #000      15.31:1  (texto preto sobre acento 15.31:1)
+ * Tokens de design. Direção: "caderno técnico editorial" — fundo tinta quente,
+ * texto cor de osso, linhas finas e um único acento (verde da marca) usado com parcimônia.
+ * Contrastes (WCAG 2.x):
+ *   text   #ece9e1 / bg #0a0b09    16.4:1
+ *   muted  #a3a69a / bg #0a0b09     7.9:1  (/ surface #11130f 7.3:1)
+ *   accent #00ff08 / bg #0a0b09    14.6:1  (texto tinta sobre acento 14.6:1)
  */
 @theme {
-  --font-sans: 'Poppins', 'Poppins Fallback', ui-sans-serif, system-ui, sans-serif;
+  --font-sans: 'Geist Sans', 'Geist Fallback', ui-sans-serif, system-ui, sans-serif;
+  --font-serif: 'Instrument Serif', 'Instrument Serif Fallback', ui-serif, Georgia, serif;
+  --font-mono:
+    'JetBrains Mono', 'JetBrains Mono Fallback', ui-monospace, SFMono-Regular, Menlo, monospace;
 
-  --color-bg: #000000;
-  --color-surface: #121212;
-  --color-surface-2: #1a1a1a;
-  --color-text: #f5f5f5;
-  --color-muted: #a3a3a3;
+  --color-bg: #0a0b09;
+  --color-surface: #11130f;
+  --color-surface-2: #181b15;
+  --color-text: #ece9e1;
+  --color-muted: #a3a69a;
   --color-accent: #00ff08;
   --color-accent-strong: #5cff63;
-  --color-on-accent: #000000;
-  --color-border: #2e2e2e;
+  --color-on-accent: #0a0b09;
+  --color-border: #2a2d26;
+  --color-border-strong: #454a3f;
 
-  --radius-card: 1.25rem;
-  --container-max: 72rem;
+  --radius-card: 0.5rem;
+  --container-max: 76rem;
 }
 
 @layer base {
@@ -63,17 +91,27 @@
     display: flex;
     flex-direction: column;
     background-color: var(--color-bg);
-    line-height: 1.6;
+    line-height: 1.65;
+    font-feature-settings:
+      'ss01' 1,
+      'cv11' 1;
   }
 
   main {
     flex: 1 0 auto;
   }
 
+  /* Serifada só tem peso 400: evita negrito sintético. */
+  h1,
+  h2 {
+    font-family: var(--font-serif);
+    font-weight: 400;
+  }
+
   /* Foco visível consistente para teclado (RNF-03). */
   :focus-visible {
-    outline: 3px solid var(--color-accent);
-    outline-offset: 3px;
+    outline: 2px solid var(--color-accent);
+    outline-offset: 4px;
     border-radius: 0.25rem;
   }
 
@@ -122,12 +160,12 @@
     width: 100%;
     max-width: var(--container-max);
     margin-inline: auto;
-    padding-inline: 1rem;
+    padding-inline: 1.25rem;
   }
 
   @media (min-width: 640px) {
     .container-site {
-      padding-inline: 1.5rem;
+      padding-inline: 2rem;
     }
   }
 
@@ -137,62 +175,177 @@
     top: -10rem;
     z-index: 100;
     padding: 0.75rem 1rem;
-    border-radius: 0.5rem;
+    border-radius: 0.375rem;
     background-color: var(--color-accent);
     color: var(--color-on-accent);
-    font-weight: 600;
+    font-weight: 500;
   }
 
   .skip-link:focus {
     top: 1rem;
   }
 
+  /* Grade de pontos discreta, usada em seções de abertura. */
+  .fundo-pontos {
+    background-image: radial-gradient(var(--color-border) 1px, transparent 1px);
+    background-size: 22px 22px;
+    mask-image: linear-gradient(to bottom, #000 30%, transparent 95%);
+  }
+
+  /* ---------- Tipografia ---------- */
+
+  /* Rótulo em monoespaçada com marcador quadrado no acento. */
+  .rotulo {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+    color: var(--color-muted);
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    font-weight: 500;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+  }
+
+  .rotulo::before {
+    content: '';
+    width: 0.5rem;
+    height: 0.5rem;
+    background-color: var(--color-accent);
+  }
+
+  .titulo-display {
+    font-size: clamp(2.9rem, 1.6rem + 6.4vw, 6.25rem);
+    line-height: 0.95;
+    letter-spacing: -0.025em;
+    word-spacing: 0.08em;
+    text-wrap: balance;
+  }
+
+  .titulo-pagina {
+    font-size: clamp(2.6rem, 1.5rem + 5vw, 5rem);
+    line-height: 1;
+    letter-spacing: -0.02em;
+    text-wrap: balance;
+  }
+
+  .titulo-secao {
+    font-size: clamp(2rem, 1.35rem + 2.8vw, 3.5rem);
+    line-height: 1.04;
+    letter-spacing: -0.02em;
+    text-wrap: balance;
+  }
+
+  .destaque-serif {
+    font-style: italic;
+    color: var(--color-accent);
+  }
+
+  .lead {
+    font-size: clamp(1.05rem, 1rem + 0.35vw, 1.25rem);
+    line-height: 1.6;
+    color: var(--color-muted);
+    max-width: 60ch;
+    text-wrap: pretty;
+  }
+
+  /* ---------- Botões e links ---------- */
+
   .btn {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    gap: 0.5rem;
-    min-height: 2.75rem;
-    padding: 0.625rem 1.5rem;
-    border-radius: 999px;
-    font-weight: 600;
+    gap: 0.6rem;
+    min-height: 3rem;
+    padding: 0.7rem 1.4rem;
+    border-radius: 0.375rem;
+    border: 1px solid transparent;
+    font-size: 0.95rem;
+    font-weight: 500;
     line-height: 1.2;
     text-align: center;
     text-decoration: none;
     transition:
-      background-color 0.15s ease,
-      color 0.15s ease,
-      border-color 0.15s ease,
-      box-shadow 0.15s ease;
+      background-color 0.2s ease,
+      color 0.2s ease,
+      border-color 0.2s ease,
+      transform 0.2s ease;
+  }
+
+  .btn:active {
+    transform: translateY(1px);
   }
 
   .btn-primary {
     background-color: var(--color-accent);
     color: var(--color-on-accent);
-    border: 2px solid var(--color-accent);
   }
 
   .btn-primary:hover {
     background-color: var(--color-accent-strong);
-    border-color: var(--color-accent-strong);
-    box-shadow: 0 0 0 4px rgb(0 255 8 / 0.18);
   }
 
   .btn-secondary {
-    background-color: transparent;
+    border-color: var(--color-border-strong);
     color: var(--color-text);
-    border: 2px solid var(--color-border);
   }
 
   .btn-secondary:hover {
-    border-color: var(--color-accent);
-    color: var(--color-accent);
+    border-color: var(--color-text);
+  }
+
+  /* Variantes para uso sobre fundo de acento (faixa de contato). */
+  .btn-escuro {
+    background-color: var(--color-on-accent);
+    color: var(--color-text);
+  }
+
+  .btn-escuro:hover {
+    background-color: #1d2018;
+  }
+
+  .btn-contorno-escuro {
+    border-color: rgb(10 11 9 / 0.45);
+    color: var(--color-on-accent);
+  }
+
+  .btn-contorno-escuro:hover {
+    border-color: var(--color-on-accent);
+    background-color: rgb(10 11 9 / 0.08);
+  }
+
+  .btn .icone-seta,
+  .link-seta .icone-seta {
+    transition: transform 0.2s ease;
+  }
+
+  .btn:hover .icone-seta,
+  .link-seta:hover .icone-seta {
+    transform: translateX(3px);
+  }
+
+  .link-seta {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: var(--color-text);
+    font-weight: 500;
+    text-decoration: underline;
+    text-decoration-color: var(--color-border-strong);
+    text-underline-offset: 0.35em;
+    text-decoration-thickness: 1px;
+    transition: text-decoration-color 0.2s ease;
+  }
+
+  .link-seta:hover {
+    text-decoration-color: var(--color-accent);
   }
 
   .link-texto {
-    color: var(--color-accent);
+    color: var(--color-text);
     text-decoration: underline;
-    text-underline-offset: 0.2em;
+    text-decoration-color: var(--color-accent);
+    text-underline-offset: 0.25em;
     text-decoration-thickness: 1px;
   }
 
@@ -200,68 +353,79 @@
     text-decoration-thickness: 2px;
   }
 
-  .eyebrow {
-    color: var(--color-accent);
-    font-size: 0.875rem;
-    font-weight: 600;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-  }
-
-  .titulo-secao {
-    font-size: clamp(1.75rem, 1.4rem + 1.5vw, 2.5rem);
-    font-weight: 700;
-    line-height: 1.15;
-    letter-spacing: -0.01em;
-  }
+  /* ---------- Elementos ---------- */
 
   .chip {
     display: inline-flex;
     align-items: center;
-    padding: 0.2rem 0.65rem;
-    border-radius: 999px;
+    padding: 0.15rem 0.55rem;
+    border-radius: 0.25rem;
     border: 1px solid var(--color-border);
-    background-color: var(--color-surface-2);
-    color: var(--color-text);
+    color: var(--color-muted);
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    line-height: 1.6;
+  }
+
+  .indice {
+    font-family: var(--font-mono);
     font-size: 0.8125rem;
-    line-height: 1.5;
+    font-weight: 500;
+    color: var(--color-accent);
+    letter-spacing: 0.05em;
+  }
+
+  .meta-mono {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    letter-spacing: 0.04em;
+    color: var(--color-muted);
+  }
+
+  /* Linhas de lista editorial (serviços, processo, trajetória). */
+  .linhas > li {
+    border-top: 1px solid var(--color-border);
+  }
+
+  .linhas > li:last-child {
+    border-bottom: 1px solid var(--color-border);
   }
 
   /* Conteúdo Markdown dos estudos de caso. */
   .prosa {
     max-width: 68ch;
-    color: var(--color-text);
+    color: #cfcdc4;
+    font-size: 1.0625rem;
   }
 
   .prosa > * + * {
-    margin-top: 1rem;
+    margin-top: 1.1rem;
   }
 
   .prosa h2 {
-    margin-top: 2.5rem;
-    font-size: 1.5rem;
-    font-weight: 700;
-    line-height: 1.25;
+    margin-top: 3rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--color-border);
+    color: var(--color-text);
+    font-size: clamp(1.75rem, 1.4rem + 1.4vw, 2.5rem);
+    line-height: 1.1;
+    letter-spacing: -0.015em;
   }
 
   .prosa h3 {
     margin-top: 2rem;
-    font-size: 1.2rem;
-    font-weight: 600;
-  }
-
-  .prosa p,
-  .prosa li {
-    color: #d4d4d4;
+    color: var(--color-text);
+    font-size: 1.125rem;
+    font-weight: 500;
   }
 
   .prosa ul {
     padding-left: 1.25rem;
-    list-style: disc;
+    list-style: square;
   }
 
   .prosa ul > li + li {
-    margin-top: 0.4rem;
+    margin-top: 0.45rem;
   }
 
   .prosa li::marker {
@@ -269,20 +433,22 @@
   }
 
   .prosa a {
-    color: var(--color-accent);
+    color: var(--color-text);
     text-decoration: underline;
-    text-underline-offset: 0.2em;
+    text-decoration-color: var(--color-accent);
+    text-underline-offset: 0.25em;
   }
 
   .prosa strong {
     color: var(--color-text);
-    font-weight: 600;
+    font-weight: 500;
   }
 
   .prosa code {
     padding: 0.1rem 0.35rem;
-    border-radius: 0.3rem;
+    border-radius: 0.25rem;
     background-color: var(--color-surface-2);
-    font-size: 0.9em;
+    font-family: var(--font-mono);
+    font-size: 0.875em;
   }
 }
