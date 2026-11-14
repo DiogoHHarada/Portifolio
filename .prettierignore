@@ -1,0 +1,11 @@
+dist/
+.astro/
+node_modules/
+.vercel/
+.lighthouseci/
+package-lock.json
+public/
+# Documentos de especificação fornecidos (mantidos como recebidos)
+PRD_Harada_DevSystems.md
+PDD_Harada_DevSystems.md
+PROMPT_CHAVE_Claude_Code_Harada_DevSystems.md

@@ -1,0 +1,136 @@
+---
+import { Image } from 'astro:assets';
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import ContactCTA from '@/components/ContactCTA.astro';
+import SocialLinks from '@/components/SocialLinks.astro';
+import Icon from '@/components/Icon.astro';
+import foto from '@/assets/institucional/diogo-harada-sobre.png';
+import { site } from '@/data/site';
+import { competencias, experiencia, formacao, idiomas } from '@/data/perfil';
+---
+
+<BaseLayout
+  title="Sobre"
+  description="Trajetória de Diogo Harada: técnico em Informática pelo CTI-UNESP, estudante de Análise e Desenvolvimento de Sistemas no IFSP Caraguatatuba, competências técnicas e currículo para download."
+  type="profile"
+>
+  <section class="container-site pt-10 sm:pt-16" aria-labelledby="titulo-pagina">
+    <div class="grid items-start gap-10 lg:grid-cols-[0.7fr_1.3fr]">
+      <Image
+        src={foto}
+        alt="Diogo Harada ao ar livre, de óculos e camisa polo preta, com os braços cruzados."
+        widths={[300, 600]}
+        sizes="(min-width: 1024px) 300px, 240px"
+        priority
+        class="mx-auto h-auto w-60 rounded-[var(--radius-card)] border border-border lg:w-full lg:max-w-[300px]"
+      />
+      <div>
+        <p class="eyebrow">Sobre</p>
+        <h1 id="titulo-pagina" class="mt-2 text-4xl font-bold tracking-tight sm:text-5xl">
+          Muito prazer, sou {site.pessoa}.
+        </h1>
+        <div class="mt-6 max-w-[68ch] space-y-4 text-[1.05rem] text-[#d4d4d4]">
+          <p>
+            Sou natural de Bauru/SP e comecei na tecnologia em 2022, no Colégio Técnico Industrial
+            (CTI-UNESP), onde me formei técnico em Informática. Lá construí a base em programação
+            com PHP, C#, Java e Python, desenvolvimento web com HTML e CSS e bancos de dados MySQL e
+            PostgreSQL.
+          </p>
+          <p>
+            Durante o curso, trabalhei em projetos colaborativos com a metodologia Scrum. Entre eles
+            estão uma loja virtual completa e o AtmoVision, meu trabalho de conclusão de curso: uma
+            plataforma de monitoramento meteorológico com IoT e Grafana para a comunidade do CTI.
+          </p>
+          <p>
+            Hoje curso Análise e Desenvolvimento de Sistemas no IFSP Caraguatatuba, onde busco
+            aplicar a tecnologia a causas reais. Um exemplo foi minha participação em uma GameJam,
+            em que criei um jogo colaborativo no GameMaker voltado à conscientização ambiental da
+            cidade — um desafio que uniu criatividade, código e a vontade de gerar impacto positivo
+            na região.
+          </p>
+        </div>
+        <div class="mt-8 flex flex-col gap-3 sm:flex-row sm:items-center">
+          <a
+            href={site.curriculo.href}
+            download={site.curriculo.nomeArquivo}
+            class="btn btn-primary"
+            data-evento="curriculo_download_click"
+            data-posicao="sobre"
+          >
+            <Icon name="download" size={18} />
+            Baixar currículo <span class="text-xs font-normal">({site.curriculo.tamanho})</span>
+          </a>
+          <SocialLinks />
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="container-site mt-20" aria-labelledby="titulo-formacao">
+    <div class="grid gap-10 lg:grid-cols-2">
+      <div>
+        <h2 id="titulo-formacao" class="titulo-secao">
+          Formação
+        </h2>
+        <ol class="mt-6 space-y-4">
+          {formacao.map((f) => (
+            <li class="rounded-[var(--radius-card)] border border-border bg-surface p-5">
+              <h3 class="font-semibold">{f.curso}</h3>
+              <p class="mt-1 text-muted">{f.instituicao}</p>
+              <p class="mt-2 text-sm text-muted">
+                {f.periodo} · <span class="text-accent">{f.status}</span>
+              </p>
+            </li>
+          ))}
+        </ol>
+      </div>
+      <div>
+        <h2 class="titulo-secao">Experiência</h2>
+        <ol class="mt-6 space-y-4">
+          {experiencia.map((e) => (
+            <li class="rounded-[var(--radius-card)] border border-border bg-surface p-5">
+              <h3 class="font-semibold">
+                {e.cargo} — {e.organizacao}
+              </h3>
+              <p class="mt-1 text-sm text-muted">{e.periodo}</p>
+              <ul class="mt-3 list-disc space-y-1 pl-5 text-[0.95rem] text-muted marker:text-accent">
+                {e.atividades.map((a) => (
+                  <li>{a}</li>
+                ))}
+              </ul>
+            </li>
+          ))}
+        </ol>
+      </div>
+    </div>
+  </section>
+
+  <section class="container-site mt-20" aria-labelledby="titulo-competencias">
+    <h2 id="titulo-competencias" class="titulo-secao">
+      Competências
+    </h2>
+    <dl class="mt-6 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+      {competencias.map((c) => (
+        <div class="rounded-[var(--radius-card)] border border-border bg-surface p-5">
+          <dt class="font-semibold">{c.grupo}</dt>
+          <dd class="mt-3">
+            <ul class="flex flex-wrap gap-2">
+              {c.itens.map((item) => (
+                <li class="chip">{item}</li>
+              ))}
+            </ul>
+          </dd>
+        </div>
+      ))}
+    </dl>
+    <p class="mt-6 text-muted">
+      Idiomas: {idiomas.map((i) => `${i.idioma} — ${i.nivel}`).join(' · ')}
+    </p>
+  </section>
+
+  <ContactCTA
+    posicao="sobre"
+    titulo="Vamos trabalhar juntos?"
+    texto="Se você tem uma vaga, um projeto ou quer trocar uma ideia, me chame no WhatsApp ou veja os outros canais de contato."
+  />
+</BaseLayout>

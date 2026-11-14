@@ -1,0 +1,95 @@
+---
+/**
+ * Botão do menu mobile (RF-03):
+ * - <button> real com aria-expanded/aria-controls;
+ * - abre/fecha por clique, fecha com Esc (foco volta ao botão), ao escolher um link,
+ *   ao clicar fora ou quando o foco sai do menu — sem aprisionar o foco;
+ * - sem JavaScript (@media scripting: none), o botão fica oculto e um link "Menu" leva à
+ *   navegação do rodapé. O script também faz a troca, para navegadores sem essa media query.
+ */
+import Icon from '@/components/Icon.astro';
+
+interface Props {
+  /** id do <nav> controlado */
+  controla: string;
+}
+
+const { controla } = Astro.props;
+const classeBase =
+  'lg:hidden inline-flex h-11 min-w-11 items-center justify-center gap-2 rounded-full border-2 border-border px-3 text-sm font-semibold text-text hover:border-accent';
+---
+
+<a href="#navegacao-rodape" class={`${classeBase} no-js-only`} data-menu-fallback>
+  <Icon name="menu" size={20} />
+  <span>Menu</span>
+</a>
+<button
+  type="button"
+  class={`${classeBase} js-only`}
+  aria-expanded="false"
+  aria-controls={controla}
+  data-menu-botao
+>
+  <span data-icone-abrir>
+    <Icon name="menu" size={20} />
+  </span>
+  <span data-icone-fechar hidden>
+    <Icon name="fechar" size={20} />
+  </span>
+  <span>Menu</span>
+</button>
+
+<script>
+  const botao = document.querySelector<HTMLButtonElement>('[data-menu-botao]');
+  const fallback = document.querySelector<HTMLAnchorElement>('[data-menu-fallback]');
+  const painelId = botao?.getAttribute('aria-controls');
+  const painel = painelId ? document.getElementById(painelId) : null;
+
+  if (botao && painel) {
+    const iconeAbrir = botao.querySelector<HTMLElement>('[data-icone-abrir]');
+    const iconeFechar = botao.querySelector<HTMLElement>('[data-icone-fechar]');
+    const desktop = window.matchMedia('(min-width: 1024px)');
+
+    if (fallback) fallback.hidden = true;
+
+    const estaAberto = () => botao.getAttribute('aria-expanded') === 'true';
+
+    const definir = (aberto: boolean) => {
+      botao.setAttribute('aria-expanded', String(aberto));
+      painel.dataset['aberto'] = String(aberto);
+      if (iconeAbrir) iconeAbrir.hidden = aberto;
+      if (iconeFechar) iconeFechar.hidden = !aberto;
+    };
+
+    botao.addEventListener('click', () => definir(!estaAberto()));
+
+    document.addEventListener('keydown', (evento) => {
+      if (evento.key === 'Escape' && estaAberto()) {
+        definir(false);
+        botao.focus();
+      }
+    });
+
+    painel.addEventListener('click', (evento) => {
+      if (evento.target instanceof Element && evento.target.closest('a')) definir(false);
+    });
+
+    document.addEventListener('click', (evento) => {
+      const alvo = evento.target;
+      if (!estaAberto() || !(alvo instanceof Node)) return;
+      if (!painel.contains(alvo) && !botao.contains(alvo)) definir(false);
+    });
+
+    // Fecha quando o foco sai do menu e do botão (Tab/Shift+Tab), sem prender o foco.
+    painel.addEventListener('focusout', (evento) => {
+      const proximo = evento.relatedTarget;
+      if (!estaAberto() || desktop.matches) return;
+      if (proximo instanceof Node && (painel.contains(proximo) || botao.contains(proximo))) return;
+      definir(false);
+    });
+
+    desktop.addEventListener('change', (mq) => {
+      if (mq.matches) definir(false);
+    });
+  }
+</script>

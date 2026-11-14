@@ -1,0 +1,288 @@
+/* Poppins local (Fontsource), somente subconjunto latino e pesos usados. */
+@import '@fontsource/poppins/latin-400.css';
+@import '@fontsource/poppins/latin-500.css';
+@import '@fontsource/poppins/latin-600.css';
+@import '@fontsource/poppins/latin-700.css';
+
+@import 'tailwindcss';
+
+/*
+ * Fallback com métricas ajustadas à Poppins (mesmos valores calculados pelo next/font):
+ * enquanto a Poppins carrega, o texto ocupa praticamente o mesmo espaço, evitando CLS.
+ * Arial/Helvetica/Liberation Sans compartilham as métricas usadas no cálculo.
+ */
+@font-face {
+  font-family: 'Poppins Fallback';
+  src: local('Arial'), local('Helvetica'), local('Liberation Sans');
+  size-adjust: 113.73%;
+  ascent-override: 92.33%;
+  descent-override: 30.78%;
+  line-gap-override: 8.79%;
+}
+
+/*
+ * Tokens de design (identidade atual: fundo preto + acento verde #00ff08).
+ * Contrastes calculados (fórmula WCAG 2.x) — todos acima de AA (4.5:1) e AAA (7:1),
+ * exceto muted/surface-2 (6.9:1, AA):
+ *   text   #f5f5f5 / bg #000      19.26:1
+ *   muted  #a3a3a3 / bg #000       8.33:1  (/ surface #121212 7.43:1, / surface-2 6.90:1)
+ *   accent #00ff08 / bg #000      15.31:1  (texto preto sobre acento 15.31:1)
+ */
+@theme {
+  --font-sans: 'Poppins', 'Poppins Fallback', ui-sans-serif, system-ui, sans-serif;
+
+  --color-bg: #000000;
+  --color-surface: #121212;
+  --color-surface-2: #1a1a1a;
+  --color-text: #f5f5f5;
+  --color-muted: #a3a3a3;
+  --color-accent: #00ff08;
+  --color-accent-strong: #5cff63;
+  --color-on-accent: #000000;
+  --color-border: #2e2e2e;
+
+  --radius-card: 1.25rem;
+  --container-max: 72rem;
+}
+
+@layer base {
+  :root {
+    color-scheme: dark;
+  }
+
+  html {
+    background-color: var(--color-bg);
+    color: var(--color-text);
+    font-family: var(--font-sans);
+    -webkit-text-size-adjust: 100%;
+    text-size-adjust: 100%;
+  }
+
+  body {
+    min-height: 100dvh;
+    display: flex;
+    flex-direction: column;
+    background-color: var(--color-bg);
+    line-height: 1.6;
+  }
+
+  main {
+    flex: 1 0 auto;
+  }
+
+  /* Foco visível consistente para teclado (RNF-03). */
+  :focus-visible {
+    outline: 3px solid var(--color-accent);
+    outline-offset: 3px;
+    border-radius: 0.25rem;
+  }
+
+  ::selection {
+    background-color: var(--color-accent);
+    color: var(--color-on-accent);
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    html {
+      scroll-behavior: smooth;
+    }
+  }
+
+  /* Respeita preferência de movimento reduzido (RNF-04). */
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
+}
+
+/*
+ * Melhoria progressiva sem script inline (CSP): controles que dependem de JS aparecem
+ * desde o primeiro paint (sem CLS) e somem quando o JavaScript está desativado.
+ */
+@media (scripting: none) {
+  .js-only {
+    display: none !important;
+  }
+}
+
+@media (scripting: enabled) {
+  .no-js-only {
+    display: none !important;
+  }
+}
+
+@layer components {
+  .container-site {
+    width: 100%;
+    max-width: var(--container-max);
+    margin-inline: auto;
+    padding-inline: 1rem;
+  }
+
+  @media (min-width: 640px) {
+    .container-site {
+      padding-inline: 1.5rem;
+    }
+  }
+
+  .skip-link {
+    position: absolute;
+    left: 1rem;
+    top: -10rem;
+    z-index: 100;
+    padding: 0.75rem 1rem;
+    border-radius: 0.5rem;
+    background-color: var(--color-accent);
+    color: var(--color-on-accent);
+    font-weight: 600;
+  }
+
+  .skip-link:focus {
+    top: 1rem;
+  }
+
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    min-height: 2.75rem;
+    padding: 0.625rem 1.5rem;
+    border-radius: 999px;
+    font-weight: 600;
+    line-height: 1.2;
+    text-align: center;
+    text-decoration: none;
+    transition:
+      background-color 0.15s ease,
+      color 0.15s ease,
+      border-color 0.15s ease,
+      box-shadow 0.15s ease;
+  }
+
+  .btn-primary {
+    background-color: var(--color-accent);
+    color: var(--color-on-accent);
+    border: 2px solid var(--color-accent);
+  }
+
+  .btn-primary:hover {
+    background-color: var(--color-accent-strong);
+    border-color: var(--color-accent-strong);
+    box-shadow: 0 0 0 4px rgb(0 255 8 / 0.18);
+  }
+
+  .btn-secondary {
+    background-color: transparent;
+    color: var(--color-text);
+    border: 2px solid var(--color-border);
+  }
+
+  .btn-secondary:hover {
+    border-color: var(--color-accent);
+    color: var(--color-accent);
+  }
+
+  .link-texto {
+    color: var(--color-accent);
+    text-decoration: underline;
+    text-underline-offset: 0.2em;
+    text-decoration-thickness: 1px;
+  }
+
+  .link-texto:hover {
+    text-decoration-thickness: 2px;
+  }
+
+  .eyebrow {
+    color: var(--color-accent);
+    font-size: 0.875rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  .titulo-secao {
+    font-size: clamp(1.75rem, 1.4rem + 1.5vw, 2.5rem);
+    font-weight: 700;
+    line-height: 1.15;
+    letter-spacing: -0.01em;
+  }
+
+  .chip {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.2rem 0.65rem;
+    border-radius: 999px;
+    border: 1px solid var(--color-border);
+    background-color: var(--color-surface-2);
+    color: var(--color-text);
+    font-size: 0.8125rem;
+    line-height: 1.5;
+  }
+
+  /* Conteúdo Markdown dos estudos de caso. */
+  .prosa {
+    max-width: 68ch;
+    color: var(--color-text);
+  }
+
+  .prosa > * + * {
+    margin-top: 1rem;
+  }
+
+  .prosa h2 {
+    margin-top: 2.5rem;
+    font-size: 1.5rem;
+    font-weight: 700;
+    line-height: 1.25;
+  }
+
+  .prosa h3 {
+    margin-top: 2rem;
+    font-size: 1.2rem;
+    font-weight: 600;
+  }
+
+  .prosa p,
+  .prosa li {
+    color: #d4d4d4;
+  }
+
+  .prosa ul {
+    padding-left: 1.25rem;
+    list-style: disc;
+  }
+
+  .prosa ul > li + li {
+    margin-top: 0.4rem;
+  }
+
+  .prosa li::marker {
+    color: var(--color-accent);
+  }
+
+  .prosa a {
+    color: var(--color-accent);
+    text-decoration: underline;
+    text-underline-offset: 0.2em;
+  }
+
+  .prosa strong {
+    color: var(--color-text);
+    font-weight: 600;
+  }
+
+  .prosa code {
+    padding: 0.1rem 0.35rem;
+    border-radius: 0.3rem;
+    background-color: var(--color-surface-2);
+    font-size: 0.9em;
+  }
+}

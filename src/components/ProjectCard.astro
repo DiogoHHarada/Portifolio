@@ -1,0 +1,60 @@
+---
+import { Image } from 'astro:assets';
+import type { CollectionEntry } from 'astro:content';
+import Icon from '@/components/Icon.astro';
+import { normalizarTecnologia } from '@/lib/projetos';
+
+interface Props {
+  projeto: CollectionEntry<'projetos'>;
+  /** Nível do título conforme a hierarquia da página. */
+  nivel?: 'h2' | 'h3';
+  /** true para imagens fora da primeira dobra (padrão). */
+  lazy?: boolean;
+}
+
+const { projeto, nivel = 'h3', lazy = true } = Astro.props;
+const { titulo, resumo, capa, capaAlt, tecnologias, ano, contexto } = projeto.data;
+const Titulo = nivel;
+const filtro = tecnologias.map(normalizarTecnologia).join('|');
+---
+
+<article
+  class="group relative flex h-full flex-col overflow-hidden rounded-[var(--radius-card)] border border-border bg-surface transition-colors focus-within:border-accent hover:border-accent"
+  data-card-projeto
+  data-tecnologias={filtro}
+>
+  <Image
+    src={capa}
+    alt={capaAlt}
+    widths={[400, 640, 800]}
+    sizes="(min-width: 1024px) 352px, (min-width: 640px) 50vw, 100vw"
+    loading={lazy ? 'lazy' : 'eager'}
+    class="aspect-[16/10] w-full border-b border-border object-cover object-top"
+  />
+  <div class="flex flex-1 flex-col p-5 sm:p-6">
+    <p class="text-sm text-muted">
+      {contexto} · {ano}
+    </p>
+    <Titulo class="mt-1 text-xl leading-snug font-semibold">
+      <a
+        href={`/projetos/${projeto.id}`}
+        class="after:absolute after:inset-0 after:content-[''] focus-visible:outline-none"
+      >
+        {titulo}
+      </a>
+    </Titulo>
+    <p class="mt-3 text-[0.95rem] text-muted">{resumo}</p>
+    <ul class="mt-4 flex flex-wrap gap-2" aria-label="Tecnologias">
+      {tecnologias.map((t) => (
+        <li class="chip">{t}</li>
+      ))}
+    </ul>
+    <p
+      class="mt-auto inline-flex items-center gap-2 pt-5 text-sm font-semibold text-accent"
+      aria-hidden="true"
+    >
+      Ver estudo de caso
+      <Icon name="seta-direita" size={16} class="transition-transform group-hover:translate-x-1" />
+    </p>
+  </div>
+</article>

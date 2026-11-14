@@ -1,0 +1,63 @@
+---
+import { Image } from 'astro:assets';
+import logo from '@/assets/institucional/logo-harada-devsystems.png';
+import MobileMenu from '@/components/MobileMenu.astro';
+import { navegacao } from '@/data/site';
+
+const atual = Astro.url.pathname.replace(/\.html$/, '').replace(/(.)\/$/, '$1') || '/';
+
+function ativo(href: string): boolean {
+  return href === '/' ? atual === '/' : atual === href || atual.startsWith(`${href}/`);
+}
+---
+
+<header class="sticky top-0 z-40 border-b border-border bg-bg">
+  <!-- Ordem do DOM: logo → botão do menu → navegação. Assim, com o menu aberto no celular,
+       o próximo Tab a partir do botão entra direto nos links. -->
+  <div class="container-site relative flex h-16 items-center justify-between gap-3 sm:h-20">
+    <a href="/" class="shrink-0 rounded-md" aria-label="Harada DevSystems — página inicial">
+      <Image
+        src={logo}
+        alt=""
+        width={123}
+        height={44}
+        densities={[1, 2]}
+        loading="eager"
+        class="h-10 w-auto sm:h-11"
+      />
+    </a>
+
+    <MobileMenu controla="menu-principal" />
+
+    <nav
+      id="menu-principal"
+      aria-label="Navegação principal"
+      data-aberto="false"
+      class="max-lg:absolute max-lg:inset-x-0 max-lg:top-full max-lg:hidden max-lg:border-b max-lg:border-border max-lg:bg-bg max-lg:data-[aberto=true]:block"
+    >
+      <ul class="container-site flex flex-col gap-1 py-4 lg:w-auto lg:flex-row lg:items-center lg:gap-1 lg:p-0">
+        {navegacao.map((item) => (
+          <li>
+            <a
+              href={item.href}
+              aria-current={ativo(item.href) ? 'page' : undefined}
+              class="block rounded-lg px-3 py-3 text-base font-medium text-muted transition-colors hover:text-text aria-[current=page]:text-accent lg:py-2 lg:text-[0.95rem]"
+            >
+              {item.rotulo}
+            </a>
+          </li>
+        ))}
+        <li class="mt-2 lg:mt-0 lg:ml-3">
+          <a
+            href="/contato"
+            class="btn btn-primary w-full lg:w-auto"
+            data-evento="cta_orcamento_click"
+            data-posicao="cabecalho"
+          >
+            Pedir orçamento
+          </a>
+        </li>
+      </ul>
+    </nav>
+  </div>
+</header>

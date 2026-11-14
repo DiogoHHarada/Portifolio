@@ -1,0 +1,59 @@
+name: Qualidade
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: qualidade-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  qualidade:
+    name: Lint, tipos, build e Lighthouse
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v5
+
+      - uses: actions/setup-node@v5
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+
+      - name: Instalar dependências (lockfile)
+        run: npm ci
+
+      - name: ESLint (inclui regras de acessibilidade)
+        run: npm run lint
+
+      - name: Prettier
+        run: npm run format:check
+
+      - name: astro check (TypeScript strict)
+        run: npm run check
+
+      - name: Build de produção
+        run: npm run build
+
+      - name: Verificação do build (links, SEO, CSP, alt, 3 cases, peso da home)
+        run: npm run verify:dist
+
+      - name: Auditoria de dependências de produção
+        run: npm audit --omit=dev --audit-level=high
+
+      # Lighthouse CI fora do lockfile (evita dependências transitivas vulneráveis no projeto).
+      - name: Lighthouse CI (mobile, 3 execuções por URL)
+        run: npx --yes @lhci/cli@0.16.1 autorun
+
+      - name: Anexar relatórios do Lighthouse
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: lighthouse-${{ github.sha }}
+          path: .lighthouseci/
+          if-no-files-found: ignore

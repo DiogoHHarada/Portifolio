@@ -1,0 +1,12 @@
+# Quebras de linha LF em todas as plataformas (Prettier usa endOfLine "lf").
+* text=auto eol=lf
+
+# Binários
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.webp binary
+*.ico binary
+*.pdf binary
+*.woff binary
+*.woff2 binary

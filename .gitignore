@@ -1,0 +1,25 @@
+# build
+dist/
+.astro/
+
+# dependências
+node_modules/
+
+# logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# variáveis de ambiente (nunca versionar valores reais)
+.env
+.env.*
+!.env.example
+
+# Vercel / Lighthouse CI
+.vercel/
+.lighthouseci/
+
+# sistema
+.DS_Store
+Thumbs.db

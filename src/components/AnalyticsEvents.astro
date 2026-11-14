@@ -1,0 +1,26 @@
+---
+/**
+ * Eventos personalizados do Vercel Web Analytics (RF-16), sem dados pessoais:
+ * apenas o nome do evento (data-evento), a rota e dimensões não sensíveis
+ * (data-posicao, data-slug, data-tipo). Renderizado somente quando
+ * ANALYTICS_ENABLED e ANALYTICS_EVENTS_ENABLED estiverem ativos.
+ */
+---
+
+<script>
+  import { track } from '@vercel/analytics';
+
+  document.addEventListener('click', (evento) => {
+    const alvo = evento.target;
+    if (!(alvo instanceof Element)) return;
+    const el = alvo.closest<HTMLElement>('[data-evento]');
+    const nome = el?.dataset['evento'];
+    if (!el || !nome) return;
+    const dados: Record<string, string> = { rota: window.location.pathname };
+    for (const chave of ['posicao', 'slug', 'tipo'] as const) {
+      const valor = el.dataset[chave];
+      if (valor) dados[chave] = valor;
+    }
+    track(nome, dados);
+  });
+</script>

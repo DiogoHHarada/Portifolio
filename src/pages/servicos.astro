@@ -1,0 +1,60 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import ServiceCard from '@/components/ServiceCard.astro';
+import ContactCTA from '@/components/ContactCTA.astro';
+import { processo, servicos } from '@/data/services';
+---
+
+<BaseLayout
+  title="Serviços"
+  description="Criação de sites institucionais, lojas virtuais e landing pages responsivas por Diogo Harada. Veja o que cada serviço inclui, como funciona o processo e peça um orçamento."
+>
+  <section class="container-site pt-10 sm:pt-16" aria-labelledby="titulo-pagina">
+    <p class="eyebrow">Serviços</p>
+    <h1 id="titulo-pagina" class="mt-2 text-4xl font-bold tracking-tight sm:text-5xl">
+      Sites para pequenos negócios e profissionais
+    </h1>
+    <p class="mt-4 max-w-2xl text-lg text-muted">
+      Desenvolvo sites que carregam rápido, funcionam bem no celular e deixam claro como o cliente
+      chega até você. O escopo de cada projeto é definido junto com você antes de começar.
+    </p>
+
+    <ul class="mt-10 grid gap-6 md:grid-cols-3">
+      {servicos.map((servico) => (
+        <li>
+          <ServiceCard servico={servico} nivel="h2" detalhado />
+        </li>
+      ))}
+    </ul>
+  </section>
+
+  <section class="container-site mt-24" aria-labelledby="titulo-processo">
+    <p class="eyebrow">Como funciona</p>
+    <h2 id="titulo-processo" class="titulo-secao mt-2">
+      Do primeiro contato à entrega
+    </h2>
+    <ol class="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+      {processo.map((etapa, i) => (
+        <li class="rounded-[var(--radius-card)] border border-border bg-surface p-6">
+          <span
+            class="inline-flex h-10 w-10 items-center justify-center rounded-full bg-accent font-bold text-on-accent"
+            aria-hidden="true"
+          >
+            {i + 1}
+          </span>
+          <h3 class="mt-4 text-lg font-semibold">
+            <span class="sr-only">Etapa {i + 1}: </span>
+            {etapa.titulo}
+          </h3>
+          <p class="mt-2 text-[0.95rem] text-muted">{etapa.texto}</p>
+        </li>
+      ))}
+    </ol>
+  </section>
+
+  <ContactCTA
+    posicao="servicos"
+    titulo="Vamos conversar sobre o seu projeto?"
+    texto="Envie uma mensagem pelo WhatsApp contando o tipo de site que você precisa. Com essas informações, preparo uma proposta com escopo e prazo."
+  />
+</BaseLayout>

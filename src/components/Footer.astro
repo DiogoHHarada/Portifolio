@@ -1,0 +1,79 @@
+---
+import Icon from '@/components/Icon.astro';
+import SocialLinks from '@/components/SocialLinks.astro';
+import { contato, navegacao, site, whatsappUrl } from '@/data/site';
+
+const ano = new Date().getFullYear();
+const direitos = `© ${ano} ${site.pessoa} · ${site.marca}`;
+---
+
+<footer class="mt-24 border-t border-border bg-surface">
+  <div class="container-site grid gap-10 py-12 md:grid-cols-[1.4fr_1fr_1fr]">
+    <div>
+      <p class="text-lg font-semibold">{site.marca}</p>
+      <p class="mt-2 max-w-sm text-sm text-muted">
+        Portfólio e serviços de {site.pessoa}, desenvolvedor web. Sites institucionais, lojas
+        virtuais e landing pages.
+      </p>
+      <SocialLinks class="mt-5" />
+    </div>
+
+    <nav id="navegacao-rodape" aria-label="Rodapé" tabindex="-1">
+      <h2 class="text-sm font-semibold tracking-wider text-text uppercase">Navegação</h2>
+      <ul class="mt-4 space-y-1">
+        {navegacao.map((item) => (
+          <li>
+            <a
+              href={item.href}
+              class="inline-block py-1.5 text-muted transition-colors hover:text-accent"
+            >
+              {item.rotulo}
+            </a>
+          </li>
+        ))}
+        <li>
+          <a
+            href={site.curriculo.href}
+            download={site.curriculo.nomeArquivo}
+            class="inline-block py-1.5 text-muted transition-colors hover:text-accent"
+            data-evento="curriculo_download_click"
+            data-posicao="rodape"
+          >
+            Currículo <span class="text-xs">({site.curriculo.tamanho})</span>
+          </a>
+        </li>
+      </ul>
+    </nav>
+
+    <div>
+      <h2 class="text-sm font-semibold tracking-wider text-text uppercase">Contato</h2>
+      <ul class="mt-4 space-y-1">
+        <li>
+          <a
+            href={whatsappUrl(contato.mensagemOrcamento)}
+            target="_blank"
+            rel="noopener noreferrer"
+            class="inline-flex items-center gap-2 py-1.5 text-muted transition-colors hover:text-accent"
+            data-evento="whatsapp_click"
+            data-posicao="rodape"
+          >
+            <Icon name="whatsapp" size={18} />
+            WhatsApp <span class="sr-only">(abre em nova aba)</span>
+          </a>
+        </li>
+        <li>
+          <a
+            href={`mailto:${contato.email}`}
+            class="inline-flex items-center gap-2 py-1.5 break-all text-muted transition-colors hover:text-accent"
+          >
+            <Icon name="email" size={18} />
+            {contato.email}
+          </a>
+        </li>
+      </ul>
+    </div>
+  </div>
+  <div class="border-t border-border">
+    <p class="container-site py-5 text-sm text-muted">{direitos}</p>
+  </div>
+</footer>

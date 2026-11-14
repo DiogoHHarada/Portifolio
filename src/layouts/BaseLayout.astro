@@ -1,0 +1,62 @@
+---
+import '@/styles/global.css';
+import Analytics from '@vercel/analytics/astro';
+import SpeedInsights from '@vercel/speed-insights/astro';
+import { ANALYTICS_ENABLED, ANALYTICS_EVENTS_ENABLED } from 'astro:env/server';
+import SEO from '@/components/SEO.astro';
+import Header from '@/components/Header.astro';
+import Footer from '@/components/Footer.astro';
+import AnalyticsEvents from '@/components/AnalyticsEvents.astro';
+import { site } from '@/data/site';
+import type { ComponentProps } from 'astro/types';
+// Mesmos arquivos referenciados pelo CSS do Fontsource (Vite gera um único asset com hash).
+// Os quatro pesos (~31 KB no total) aparecem acima da dobra em alguma página; pré-carregá-los
+// evita deslocamento de layout quando a fonte substitui o fallback.
+import poppins400 from '@fontsource/poppins/files/poppins-latin-400-normal.woff2?url';
+import poppins500 from '@fontsource/poppins/files/poppins-latin-500-normal.woff2?url';
+import poppins600 from '@fontsource/poppins/files/poppins-latin-600-normal.woff2?url';
+import poppins700 from '@fontsource/poppins/files/poppins-latin-700-normal.woff2?url';
+
+const fontesCriticas = [poppins400, poppins500, poppins600, poppins700];
+
+type Props = ComponentProps<typeof SEO>;
+
+const seo = Astro.props;
+---
+
+<!doctype html>
+<html lang={site.idioma}>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#000000" />
+    <meta name="color-scheme" content="dark" />
+    <meta name="generator" content={Astro.generator} />
+    {fontesCriticas.map((href) => (
+      <link rel="preload" href={href} as="font" type="font/woff2" crossorigin />
+    ))}
+    <link rel="icon" href="/favicon.ico" sizes="32x32" />
+    <link rel="icon" href="/favicon.png" type="image/png" sizes="48x48" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <link rel="manifest" href="/site.webmanifest" />
+    <link rel="sitemap" href="/sitemap-index.xml" />
+    <SEO {...seo} />
+  </head>
+  <body class="bg-bg text-text antialiased">
+    <a href="#conteudo" class="skip-link">
+      Pular para o conteúdo
+    </a>
+    <Header />
+    <main id="conteudo" tabindex="-1" class="focus:outline-none">
+      <slot />
+    </main>
+    <Footer />
+    {ANALYTICS_ENABLED && (
+      <>
+        <Analytics />
+        <SpeedInsights />
+      </>
+    )}
+    {ANALYTICS_ENABLED && ANALYTICS_EVENTS_ENABLED && <AnalyticsEvents />}
+  </body>
+</html>

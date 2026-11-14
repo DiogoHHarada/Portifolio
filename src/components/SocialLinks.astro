@@ -1,0 +1,26 @@
+---
+import Icon from '@/components/Icon.astro';
+import { redesVisiveis, site } from '@/data/site';
+
+interface Props {
+  class?: string;
+}
+
+const { class: className = '' } = Astro.props;
+---
+
+<ul class:list={['flex flex-wrap gap-3', className]}>
+  {redesVisiveis.map((rede) => (
+    <li>
+      <a
+        href={rede.url}
+        target="_blank"
+        rel="noopener noreferrer"
+        aria-label={`${rede.nome} de ${site.pessoa} (abre em nova aba)`}
+        class="inline-flex h-11 w-11 items-center justify-center rounded-full border-2 border-border text-text transition-colors hover:border-accent hover:text-accent"
+      >
+        <Icon name={rede.icone} size={20} />
+      </a>
+    </li>
+  ))}
+</ul>

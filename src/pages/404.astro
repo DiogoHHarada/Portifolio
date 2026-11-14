@@ -1,0 +1,29 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import Icon from '@/components/Icon.astro';
+---
+
+<BaseLayout
+  title="Página não encontrada"
+  description="O endereço acessado não existe no site de Diogo Harada. Volte ao início ou veja os projetos."
+  noindex
+>
+  <section class="container-site py-20 sm:py-28" aria-labelledby="titulo-pagina">
+    <p class="eyebrow">Erro 404</p>
+    <h1 id="titulo-pagina" class="mt-2 text-4xl font-bold tracking-tight sm:text-5xl">
+      Página não encontrada
+    </h1>
+    <p class="mt-4 max-w-xl text-lg text-muted">
+      O endereço pode ter mudado ou foi digitado incorretamente. Use um dos caminhos abaixo para
+      continuar navegando.
+    </p>
+    <div class="mt-8 flex flex-col gap-3 sm:flex-row">
+      <a href="/" class="btn btn-primary">
+        <Icon name="seta-esquerda" size={18} /> Voltar ao início
+      </a>
+      <a href="/projetos" class="btn btn-secondary">
+        Ver projetos
+      </a>
+    </div>
+  </section>
+</BaseLayout>
