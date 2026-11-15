@@ -5,6 +5,7 @@ import ProjectCard from '@/components/ProjectCard.astro';
 import ServiceCard from '@/components/ServiceCard.astro';
 import ContactCTA from '@/components/ContactCTA.astro';
 import Icon from '@/components/Icon.astro';
+import Ilha from '@/components/Ilha.astro';
 import retrato from '@/assets/institucional/diogo-harada-retrato.png';
 import { listarDestaques } from '@/lib/projetos';
 import { servicos } from '@/data/services';
@@ -12,6 +13,7 @@ import { redesVisiveis, site } from '@/data/site';
 import { competencias } from '@/data/perfil';
 
 const destaques = await listarDestaques();
+const tecnologias = competencias.flatMap((c) => c.itens);
 if (destaques.length < 3) {
   console.warn(
     `[home] Apenas ${destaques.length} projeto(s) em destaque. RF-04 exige 3 cases reais (ver PENDENCIAS.md).`,
@@ -39,6 +41,19 @@ const ficha = [
   <!-- HERO: proposta + duas jornadas (clientes e recrutadores) -->
   <section class="relative isolate overflow-hidden" aria-labelledby="titulo-hero">
     <div class="fundo-pontos absolute inset-0 -z-10" aria-hidden="true"></div>
+    <Ilha
+      nome="halftone"
+      class="fundo-halftone pointer-events-none absolute inset-0 -z-10"
+      aria-hidden="true"
+      props={{
+        baseColor: '#454a3f',
+        accentColor: '#00ff08',
+        density: 72,
+        dotSize: 85,
+        speed: 30,
+        hover: 120,
+      }}
+    />
 
     <div class="container-site pt-12 sm:pt-20 lg:pt-24">
       <div class="grid gap-12 lg:grid-cols-12 lg:items-end lg:gap-10">
@@ -47,7 +62,7 @@ const ficha = [
             {site.cargo} · {site.marca}
           </p>
           <h1 id="titulo-hero" class="titulo-display mt-6">
-            Desenvolvimento web com foco em <em class="destaque-serif">velocidade</em> e
+            Desenvolvimento web com foco em <em class="destaque-serif">velocidade</em> e{' '}
             <em class="destaque-serif">clareza</em>.
           </h1>
           <p class="lead mt-8">
@@ -87,15 +102,17 @@ const ficha = [
             Precisa de um site?
           </p>
           <p class="text-muted">Conte sua ideia e receba uma proposta.</p>
-          <a
-            href="/contato"
-            class="btn btn-primary self-start"
-            data-evento="cta_orcamento_click"
-            data-posicao="hero"
-          >
-            Pedir orçamento
-            <Icon name="seta-direita" size={16} class="icone-seta" />
-          </a>
+          <Ilha nome="ima" class="self-start" props={{ padding: 60, magnetStrength: 4 }}>
+            <a
+              href="/contato"
+              class="btn btn-primary"
+              data-evento="cta_orcamento_click"
+              data-posicao="hero"
+            >
+              Pedir orçamento
+              <Icon name="seta-direita" size={16} class="icone-seta" />
+            </a>
+          </Ilha>
         </li>
         <li class="flex flex-col gap-5 border-t border-border-strong py-8 md:border-t-0 md:border-l md:py-10 md:pl-10">
           <p class="indice">02 · Para recrutadores</p>
@@ -156,6 +173,29 @@ const ficha = [
     </ul>
   </section>
 
+  <!-- FAIXA DE TECNOLOGIAS (decorativa; a lista acessível está na trajetória) -->
+  <div class="mt-28 border-y border-border py-6 sm:mt-36 sm:py-8" aria-hidden="true">
+    <Ilha
+      nome="faixa"
+      class="faixa-mascara font-serif text-5xl leading-none tracking-tight text-text/85 italic sm:text-7xl"
+      props={{
+        words: tecnologias,
+        baseVelocity: 6,
+        gap: 40,
+        separatorClassName: 'inline-block size-2.5 rotate-45 bg-accent',
+      }}
+    >
+      <div class="flex gap-10 overflow-hidden whitespace-nowrap">
+        {tecnologias.map((t) => (
+          <span class="inline-flex shrink-0 items-center gap-10">
+            {t}
+            <span class="inline-block size-2.5 rotate-45 bg-accent"></span>
+          </span>
+        ))}
+      </div>
+    </Ilha>
+  </div>
+
   <!-- TRAJETÓRIA (jornada do recrutador) -->
   <section class="container-site mt-28 sm:mt-36" aria-labelledby="titulo-trajetoria">
     <div class="grid gap-12 lg:grid-cols-12 lg:gap-16">
@@ -165,16 +205,22 @@ const ficha = [
           Formação técnica e <em class="destaque-serif">código aberto</em>
         </h2>
         <div class="mt-8 flex flex-col gap-3 sm:flex-row">
-          <a
-            href={site.curriculo.href}
-            download={site.curriculo.nomeArquivo}
-            class="btn btn-primary"
-            data-evento="curriculo_download_click"
-            data-posicao="home"
+          <Ilha
+            nome="ima"
+            class="[&_.btn]:w-full sm:[&_.btn]:w-auto"
+            props={{ padding: 60, magnetStrength: 4, wrapperClassName: 'w-full sm:w-auto' }}
           >
-            <Icon name="download" size={18} />
-            Baixar currículo <span class="text-xs font-normal">({site.curriculo.tamanho})</span>
-          </a>
+            <a
+              href={site.curriculo.href}
+              download={site.curriculo.nomeArquivo}
+              class="btn btn-primary"
+              data-evento="curriculo_download_click"
+              data-posicao="home"
+            >
+              <Icon name="download" size={18} />
+              Baixar currículo <span class="text-xs font-normal">({site.curriculo.tamanho})</span>
+            </a>
+          </Ilha>
           <a href="/sobre" class="btn btn-secondary">
             Minha trajetória
           </a>
@@ -208,11 +254,9 @@ const ficha = [
 
         <h3 class="meta-mono mt-10 uppercase">Tecnologias com que já trabalhei</h3>
         <ul class="mt-4 flex flex-wrap gap-2">
-          {competencias
-            .flatMap((c) => c.itens)
-            .map((item) => (
-              <li class="chip">{item}</li>
-            ))}
+          {tecnologias.map((item) => (
+            <li class="chip">{item}</li>
+          ))}
         </ul>
       </div>
     </div>

@@ -190,6 +190,35 @@
     background-image: radial-gradient(var(--color-border) 1px, transparent 1px);
     background-size: 22px 22px;
     mask-image: linear-gradient(to bottom, #000 30%, transparent 95%);
+    transition: opacity 1.2s ease;
+  }
+
+  /* ---------- Ilhas (efeitos OriginKit / React Bits, ver src/scripts/ilhas.ts) ---------- */
+
+  /* Halftone do hero: entra devagar, concentrado à direita (lado do retrato). */
+  .fundo-halftone {
+    opacity: 0;
+    mask-image: radial-gradient(ellipse 65% 85% at 82% 35%, #000 0%, transparent 72%);
+    transition: opacity 1.6s ease;
+  }
+  .fundo-halftone[data-ilha-ativa] {
+    opacity: 0.55;
+  }
+  .fundo-pontos:has(~ .fundo-halftone[data-ilha-ativa]) {
+    opacity: 0.35;
+  }
+
+  /* Capa de projeto: o <img> só fica oculto enquanto o mosaico é desenhado. */
+  [data-capa]:has(> [data-ilha-ativa]:not([data-revelado])) > img {
+    opacity: 0;
+  }
+  [data-capa] > [data-revelado] {
+    display: none;
+  }
+
+  /* Faixa de tecnologias: bordas esmaecidas. */
+  .faixa-mascara {
+    mask-image: linear-gradient(to right, transparent, #000 8%, #000 92%, transparent);
   }
 
   /* ---------- Tipografia ---------- */

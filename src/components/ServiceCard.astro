@@ -1,5 +1,6 @@
 ---
 import Icon from '@/components/Icon.astro';
+import Ilha from '@/components/Ilha.astro';
 import type { Servico } from '@/data/services';
 
 interface Props {
@@ -15,28 +16,45 @@ const { servico, nivel = 'h3', indice, detalhado = false } = Astro.props;
 const Titulo = nivel;
 ---
 
-<article
-  class="grid gap-x-10 gap-y-4 py-8 sm:py-10 md:grid-cols-12"
-  id={detalhado ? servico.id : undefined}
+<Ilha
+  nome="holofote"
+  props={{
+    spotlightColor: '#00ff08',
+    intensity: 0.07,
+    spotlightSize: 460,
+    softness: 0.9,
+    borderGlow: 0.55,
+    proximity: 0,
+    style: {
+      '--spotlight-card-surface': 'transparent',
+      '--spotlight-card-shadow': 'none',
+      '--spotlight-card-border': 'transparent',
+    },
+  }}
 >
-  <p class="indice md:col-span-1 md:pt-3">{String(indice).padStart(2, '0')}</p>
-  <Titulo class="font-serif text-4xl leading-[1.05] tracking-tight sm:text-5xl md:col-span-5">
-    {servico.titulo}
-  </Titulo>
-  <div class="md:col-span-6">
-    <p class="text-muted">{servico.resumo}</p>
-    {detalhado && (
-      <>
-        <p class="meta-mono mt-6 uppercase">O que normalmente inclui</p>
-        <ul class="mt-3 space-y-2">
-          {servico.entregaveis.map((item) => (
-            <li class="flex gap-3 text-[0.95rem] text-text/90">
-              <Icon name="check" size={18} class="mt-1 shrink-0 text-accent" />
-              <span>{item}</span>
-            </li>
-          ))}
-        </ul>
-      </>
-    )}
-  </div>
-</article>
+  <article
+    class="grid gap-x-10 gap-y-4 py-8 sm:py-10 md:grid-cols-12"
+    id={detalhado ? servico.id : undefined}
+  >
+    <p class="indice md:col-span-1 md:pt-3">{String(indice).padStart(2, '0')}</p>
+    <Titulo class="font-serif text-4xl leading-[1.05] tracking-tight sm:text-5xl md:col-span-5">
+      {servico.titulo}
+    </Titulo>
+    <div class="md:col-span-6">
+      <p class="text-muted">{servico.resumo}</p>
+      {detalhado && (
+        <>
+          <p class="meta-mono mt-6 uppercase">O que normalmente inclui</p>
+          <ul class="mt-3 space-y-2">
+            {servico.entregaveis.map((item) => (
+              <li class="flex gap-3 text-[0.95rem] text-text/90">
+                <Icon name="check" size={18} class="mt-1 shrink-0 text-accent" />
+                <span>{item}</span>
+              </li>
+            ))}
+          </ul>
+        </>
+      )}
+    </div>
+  </article>
+</Ilha>

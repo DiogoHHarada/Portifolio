@@ -1,5 +1,6 @@
 ---
 import Icon from '@/components/Icon.astro';
+import Ilha from '@/components/Ilha.astro';
 import { contato, whatsappUrl } from '@/data/site';
 
 interface Props {
@@ -20,27 +21,45 @@ const {
   <div class="container-site grid gap-10 py-16 sm:py-24 lg:grid-cols-[1.4fr_1fr] lg:items-end">
     <div>
       <p class="rotulo text-on-accent/70 before:bg-on-accent">Contato</p>
-      <h2
+      <Ilha
+        nome="revelar"
+        as="h2"
         id={`cta-${posicao}`}
         class="titulo-display mt-5 text-[clamp(2.75rem,1.5rem+5.5vw,5.5rem)]"
+        props={{
+          mode: 'enter',
+          effect: 'rise',
+          splitBy: 'words',
+          baseRotation: 0,
+          enableBlur: false,
+          baseOpacity: 0,
+          stagger: 0.07,
+          duration: 0.9,
+        }}
       >
         {titulo}
-      </h2>
+      </Ilha>
     </div>
     <div>
       <p class="max-w-md text-lg text-on-accent/80">{texto}</p>
       <div class="mt-8 flex flex-col gap-3 sm:flex-row">
-        <a
-          href={whatsappUrl(contato.mensagemOrcamento)}
-          target="_blank"
-          rel="noopener noreferrer"
-          class="btn btn-escuro"
-          data-evento="whatsapp_click"
-          data-posicao={posicao}
+        <Ilha
+          nome="ima"
+          class="[&_.btn]:w-full sm:[&_.btn]:w-auto"
+          props={{ padding: 60, magnetStrength: 4, wrapperClassName: 'w-full sm:w-auto' }}
         >
-          <Icon name="whatsapp" size={20} />
-          Falar no WhatsApp <span class="sr-only">(abre em nova aba)</span>
-        </a>
+          <a
+            href={whatsappUrl(contato.mensagemOrcamento)}
+            target="_blank"
+            rel="noopener noreferrer"
+            class="btn btn-escuro"
+            data-evento="whatsapp_click"
+            data-posicao={posicao}
+          >
+            <Icon name="whatsapp" size={20} />
+            Falar no WhatsApp <span class="sr-only">(abre em nova aba)</span>
+          </a>
+        </Ilha>
         <a href="/contato" class="btn btn-contorno-escuro">
           Outras formas de contato
         </a>

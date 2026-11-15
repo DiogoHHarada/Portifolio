@@ -58,5 +58,8 @@ const seo = Astro.props;
       </>
     )}
     {ANALYTICS_ENABLED && ANALYTICS_EVENTS_ENABLED && <AnalyticsEvents />}
+    <script>
+      import '@/scripts/ilhas';
+    </script>
   </body>
 </html>

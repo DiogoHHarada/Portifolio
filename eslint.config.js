@@ -6,7 +6,15 @@ import astro from 'eslint-plugin-astro';
 
 export default [
   {
-    ignores: ['dist/', '.astro/', 'node_modules/', '.vercel/', '.lighthouseci/'],
+    // Código de terceiros (OriginKit, React Bits) mantido próximo do original.
+    ignores: [
+      'src/components/ilhas/vendor/',
+      'dist/',
+      '.astro/',
+      'node_modules/',
+      '.vercel/',
+      '.lighthouseci/',
+    ],
   },
   js.configs.recommended,
   ...tseslint.configs.recommended,

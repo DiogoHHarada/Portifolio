@@ -1,0 +1,26 @@
+---
+/**
+ * Ponto de montagem de um efeito React (OriginKit / React Bits).
+ *
+ * O Astro entrega o HTML completo; `src/scripts/ilhas.ts` monta o efeito no cliente
+ * quando o elemento se aproxima da tela. Sem JavaScript, ou com movimento reduzido,
+ * o conteúdo do slot fica como está. Nada é escrito inline (compatível com a CSP).
+ */
+import type { NomeIlha } from '@/scripts/ilhas';
+
+interface Props {
+  nome: NomeIlha;
+  /** Propriedades serializáveis repassadas ao componente React. */
+  props?: Record<string, unknown>;
+  as?: 'div' | 'span' | 'h2' | 'p';
+  class?: string;
+  id?: string;
+  'aria-hidden'?: 'true';
+}
+
+const { nome, props = {}, as: Tag = 'div', class: classe, ...resto } = Astro.props;
+---
+
+<Tag data-ilha={nome} data-ilha-props={JSON.stringify(props)} class={classe} {...resto}>
+  <slot />
+</Tag>

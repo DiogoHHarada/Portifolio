@@ -39,3 +39,18 @@ Títulos fluidos com `clamp()` (`titulo-display`, `titulo-pagina`, `titulo-secao
 ## Restrições mantidas
 
 CSP estrita (sem estilos ou scripts inline), HTML sem conteúdo inventado, navegação por teclado, foco visível (contorno de 2 px no acento) e os mesmos textos e dados de `src/data/` e `src/content/`.
+
+## Efeitos interativos (OriginKit e React Bits)
+
+Camada de movimento sobre a base editorial, montada como "ilhas" React por `src/scripts/ilhas.ts`. Cada ponto de montagem é um `<Ilha nome="…">` (`src/components/Ilha.astro`) que já entrega o HTML completo; o efeito só é baixado e montado quando o elemento se aproxima da tela, depois do `load`.
+
+| Ilha         | Origem                     | Onde                                                  | Condição               |
+| ------------ | -------------------------- | ----------------------------------------------------- | ---------------------- |
+| `halftone`   | OriginKit · Halftone Pulse | fundo do hero (pontos em WebGL que seguem o cursor)   | tela ≥ 768 px          |
+| `capa-pixel` | OriginKit · Pixel Unfold   | capas dos projetos (mosaico ao chegar pela rolagem)   | —                      |
+| `faixa`      | OriginKit · Sync Scroll    | faixa de tecnologias da home (segue a rolagem)        | —                      |
+| `ima`        | React Bits · Magnet        | botões principais (orçamento, currículo, WhatsApp)    | mouse (`hover: hover`) |
+| `holofote`   | React Bits · Spotlight     | linhas de serviço (luz verde que segue o cursor)      | mouse (`hover: hover`) |
+| `revelar`    | React Bits · Scroll Reveal | título da faixa de contato (palavras sobem ao entrar) | —                      |
+
+Regras: nada é montado com `prefers-reduced-motion: reduce`; sem JavaScript o HTML do Astro é o conteúdo final; nenhum efeito altera texto, links ou atributos de métrica (o modo "envolver" move os nós originais para dentro do componente). O código de terceiros fica em `src/components/ilhas/vendor/`, com os ajustes marcados com `Harada:` e fora do lint.

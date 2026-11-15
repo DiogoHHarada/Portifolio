@@ -2,6 +2,7 @@
 import { Image } from 'astro:assets';
 import type { CollectionEntry } from 'astro:content';
 import Icon from '@/components/Icon.astro';
+import Ilha from '@/components/Ilha.astro';
 import { normalizarTecnologia } from '@/lib/projetos';
 
 interface Props {
@@ -29,8 +30,9 @@ const invertido = indice % 2 === 0;
   data-tecnologias={filtro}
 >
   <div
+    data-capa
     class:list={[
-      'overflow-hidden rounded-md border border-border bg-surface lg:col-span-7',
+      'relative overflow-hidden rounded-md border border-border bg-surface lg:col-span-7',
       invertido && 'lg:order-2',
     ]}
   >
@@ -41,6 +43,12 @@ const invertido = indice % 2 === 0;
       sizes="(min-width: 1280px) 640px, (min-width: 1024px) 53vw, calc(100vw - 2.5rem)"
       loading={lazy ? 'lazy' : 'eager'}
       class="aspect-[16/10] w-full object-cover object-top transition-transform duration-500 ease-out group-hover:scale-[1.025]"
+    />
+    <Ilha
+      nome="capa-pixel"
+      class="pointer-events-none absolute inset-0"
+      aria-hidden="true"
+      props={{ pixelSize: 22, duration: 1.3 }}
     />
   </div>
   <div class="flex flex-col lg:col-span-5">
