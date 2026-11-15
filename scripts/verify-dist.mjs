@@ -80,6 +80,10 @@ for (const pagina of paginas) {
       (caminhoCanonical !== '/' && caminhoCanonical.endsWith('/'))
     )
       falhar(nome, `canonical com .html ou barra final: ${canonical}`);
+    if (caminhoCanonical.endsWith('/index'))
+      falhar(nome, `canonical termina em /index: ${canonical}`);
+    if (nome === 'index.html' && caminhoCanonical !== '/')
+      falhar(nome, `canonical da home deve ser a raiz: ${canonical}`);
   }
 
   for (const prop of ['og:title', 'og:description', 'og:url', 'og:image', 'og:type']) {

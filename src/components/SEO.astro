@@ -37,7 +37,11 @@ const tituloCompleto = title
   : `${site.pessoa} | ${site.cargo} — ${site.marca}`;
 
 // Canonical sempre aponta para o domínio de produção configurado, sem barra final.
-const caminho = Astro.url.pathname.replace(/\.html$/, '').replace(/(.)\/$/, '$1');
+// Com build.format 'file' a home chega como /index.html: vira '/', não '/index'.
+const caminho = Astro.url.pathname
+  .replace(/\.html$/, '')
+  .replace(/(^|\/)index$/, '/')
+  .replace(/(.)\/$/, '$1');
 const canonical = new URL(caminho, Astro.site).href;
 const imagemAbsoluta = new URL(image, Astro.site).href;
 
